@@ -1,0 +1,36 @@
+<!-- backend/app/templates/book.html -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }}</title>
+  <style>
+    @page { size: A4; margin: 20mm; }
+    body { font-family: "DejaVu Sans", Arial, sans-serif; color:#222; }
+    .cover { text-align:center; padding-top:60px; }
+    .cover h1 { font-size: 48px; margin-bottom: 10px; }
+    .page { page-break-after: always; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+    .text { width:75%; font-size:20px; line-height:1.4; text-align:center; margin-top:10mm; }
+    .img { width:60%; max-height:40vh; object-fit:contain; margin-top:6mm; }
+    .dedicatoria { font-style: italic; text-align:center; margin-top:20px; }
+  </style>
+</head>
+<body>
+  <div class="cover page">
+    {% if image_map.cover %}
+      <img src="{{ image_map.cover }}" class="img" />
+    {% endif %}
+    <h1>{{ title }}</h1>
+    <p class="dedicatoria">{{ dedicatoria }}</p>
+  </div>
+
+  {% for p in pages %}
+  <div class="page">
+    {% if image_map[p.page] %}
+      <img src="{{ image_map[p.page] }}" class="img" />
+    {% endif %}
+    <div class="text">{{ p.text }}</div>
+  </div>
+  {% endfor %}
+</body>
+</html>
